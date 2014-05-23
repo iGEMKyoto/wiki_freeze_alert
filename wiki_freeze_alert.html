@@ -1,0 +1,52 @@
+<html>
+<a id="kyoto_alert" target="_blank" href="http://2013.igem.org/Team:Kyoto/TimeLimit">count down</a>
+<style type="text/css">
+#kyoto_alert {
+  position: fixed;
+  top: 30px;
+  right: 10px;
+  background-color: #333;
+  border: 4px solid #000;
+  height: 30px;
+  line-height: 30px;
+  font-size: 30px;
+  color: #ddd;
+  text-decoration: none;
+  padding: 30px 10px;
+  display: none;
+}
+</style>
+<script type="text/javascript">
+var timer = setInterval(function() {
+  var countdown = document.getElementById("kyoto_alert");
+  var date = new Date();
+  var time = Date.UTC(
+    date.getUTCFullYear(),
+    date.getUTCMonth(),
+    date.getUTCDate(),
+    date.getUTCHours(),
+    date.getUTCMinutes(),
+    date.getUTCSeconds()
+  );
+  var freeze = Date.UTC(2013, 8, 28, 4, 0, 0);
+  time = (freeze - time)/1000;
+  if (time < 1 * 3600) {
+    countdown.style.color = "#f00";
+  } else if (time < 24 * 3600) {
+    countdown.style.color = "#ff0";
+  }
+  if (time >= 0) {
+    var second = ('0' + (time % 60)).slice(-2);
+    time = Math.floor(time / 60);
+    var minute = ('0' + (time % 60)).slice(-2);
+    time = Math.floor(time / 60);
+    var hour = ('0' + (time)).slice(-2);
+    var str = hour + " : " + minute + " : " + second;
+    countdown.innerText = str;
+    countdown.style.display = "block";
+  } else {
+    countdown.style.display = "none";
+  }
+}, 200);
+</script>
+</html>
