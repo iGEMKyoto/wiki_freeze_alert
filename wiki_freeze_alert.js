@@ -1,3 +1,5 @@
+$(function(){
+
 /* October 17 wiki FREEZE at 11:59PM EDT */
 var freeze = Date.UTC(2014, 9, 17, 3, 59, 0);
 
@@ -69,3 +71,5 @@ var timer = setInterval(function() {
         countdown.style.display = "block";
     }
 }, 200);
+
+});
