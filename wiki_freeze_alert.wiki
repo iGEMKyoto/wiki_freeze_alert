@@ -1,7 +1,29 @@
+<html>
+
+<!- http://github.com/iGEMKyoto/wiki_freeze_alert ->
+
+<div id="kyoto_alert">count down</div>
+<style type="text/css">
+#kyoto_alert {
+  position: fixed;
+  top: 30px;
+  right: 10px;
+  background-color: #333;
+  border: 4px solid #000;
+  height: 30px;
+  line-height: 30px;
+  font-size: 30px;
+  color: #ddd;
+  text-decoration: none;
+  padding: 30px 10px;
+  display: none;
+}
+</style>
+<script type="text/javascript">
 $(function(){
 
-/* October 17 wiki FREEZE at 11:59PM EDT */
-var freeze = Date.UTC(2014, 9, 10, 4, 00, 0);
+/* October 10 wiki FREEZE at 11:59PM EDT */
+var freeze = Date.UTC(</html>{{{year|2014}}}, {{{month|9}}}, {{{day|10}}}<html>, 4, 00, 0);
 
 function get_current_utc() {
     var date = new Date();
@@ -73,3 +95,6 @@ var timer = setInterval(function() {
 }, 200);
 
 });
+</script>
+</html>
+
