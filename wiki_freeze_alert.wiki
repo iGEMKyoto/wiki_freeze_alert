@@ -8,22 +8,44 @@
   position: fixed;
   top: 30px;
   right: 10px;
-  background-color: #333;
-  border: 4px solid #000;
   height: 30px;
-  line-height: 30px;
-  font-size: 30px;
-  color: #ddd;
-  text-decoration: none;
+  width: 300px;
   padding: 30px 10px;
   display: none;
+
+  /* text */
+  line-height: 30px;
+  font-size: 30px;
+  font-family: sans-serif;
+  text-align: center;
+  text-decoration: none;
+
+  /* color */
+  background-color: #aaa;
+  border: 4px solid #888;
+  color: #eee;
+
+  /* border radius */
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+
+  /* select cancel */
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
 }
 </style>
+
 <script type="text/javascript">
 $(function(){
 
-/* October 10 wiki FREEZE at 11:59PM EDT */
-var freeze = Date.UTC(</html>{{{year|2014}}}, {{{month|9}}}, {{{day|10}}}<html>, 4, 00, 0);
+/* October 17 wiki FREEZE at 12:00PM EDT */
+var year = </html>{{{year|2014}}}<html>;
+var month = </html>{{{month|10}}}<html>;
+var day = </html>{{{day|10}}}<html>;
+var freeze = Date.UTC(year, month-1, day, 4, 00, 0);
 
 function get_current_utc() {
     var date = new Date();
@@ -62,16 +84,17 @@ function itos(number, figures) {
 }
 
 var timer = setInterval(function() {
-    var countdown = document.getElementById("kyoto_alert");
+    //var countdown = document.getElementById("kyoto_alert");
+    var $countdown = $("#kyoto_alert");
     var current_utc = get_current_utc();
     var interval = (freeze - current_utc)/1000;
     if (interval < 0) {
-        countdown.style.display = "none";
+        $countdown.hide();
     } else if (interval < 4 * 24 * 3600) {
         if (interval < 1 * 3600)
-            countdown.style.color = "#f00";
+            $countdown.css("color", "#f00");
         else if (interval < 24 * 3600)
-            countdown.style.color = "#ff0";
+            $countdown.css("color", "#ff0");
 
         var time = [];
         var second_qr = qr(interval, 60);
@@ -79,8 +102,8 @@ var timer = setInterval(function() {
         var minute_qr = qr(second_qr[0], 60);
         time.push(itos(minute_qr[1], 2) + 'm');
         time.push(itos(minute_qr[0], 2) + 'h');
-        countdown.innerText = time.reverse().join(' : ');
-        countdown.style.display = "block";
+        $countdown.text(time.reverse().join(' : '));
+        $countdown.show();
     } else {
         var time = [];
         interval = Math.floor(interval / 60);
@@ -89,10 +112,39 @@ var timer = setInterval(function() {
         var hour_qr = qr(minute_qr[0], 24);
         time.push(itos(hour_qr[1], 2) + 'h');
         time.push(itos(hour_qr[0], 3) + 'd');
-        countdown.innerText = time.reverse().join(' : ');
-        countdown.style.display = "block";
+        $countdown.text(time.reverse().join(' : '));
+        $countdown.show();
     }
 }, 200);
+
+var kyoto_alert_wrapper = {
+    x : undefined,
+    y : undefined,
+    is_down : false
+};
+
+$("#kyoto_alert").mousedown(function(e) {
+    kyoto_alert_wrapper.x = e.pageX;
+    kyoto_alert_wrapper.y = e.pageY;
+    kyoto_alert_wrapper.is_down = true;
+}).mousemove(function(e) {
+    if (kyoto_alert_wrapper.is_down &&
+        kyoto_alert_wrapper.x !== undefined &&
+        kyoto_alert_wrapper.y !== undefined) {
+        var x = e.pageX,
+            y = e.pageY;
+        var offset = $(this).offset();
+        offset.left += x - kyoto_alert_wrapper.x;
+        offset.top += y - kyoto_alert_wrapper.y;
+        $(this).offset(offset);
+        kyoto_alert_wrapper.x = x;
+        kyoto_alert_wrapper.y = y;
+    }
+}).mouseup(function(e) {
+    kyoto_alert_wrapper.x = undefined;
+    kyoto_alert_wrapper.y = undefined;
+    kyoto_alert_wrapper.is_down = false;
+});
 
 });
 </script>
