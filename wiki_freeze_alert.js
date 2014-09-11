@@ -76,33 +76,6 @@ var timer = setInterval(function() {
     }
 }, 200);
 
-var kyoto_alert_wrapper = {
-    x : undefined,
-    y : undefined,
-    is_down : false
-};
-
-$("#kyoto_alert").mousedown(function(e) {
-    kyoto_alert_wrapper.x = e.pageX;
-    kyoto_alert_wrapper.y = e.pageY;
-    kyoto_alert_wrapper.is_down = true;
-}).mousemove(function(e) {
-    if (kyoto_alert_wrapper.is_down &&
-        kyoto_alert_wrapper.x !== undefined &&
-        kyoto_alert_wrapper.y !== undefined) {
-        var x = e.pageX,
-            y = e.pageY;
-        var offset = $(this).offset();
-        offset.left += x - kyoto_alert_wrapper.x;
-        offset.top += y - kyoto_alert_wrapper.y;
-        $(this).offset(offset);
-        kyoto_alert_wrapper.x = x;
-        kyoto_alert_wrapper.y = y;
-    }
-}).mouseup(function(e) {
-    kyoto_alert_wrapper.x = undefined;
-    kyoto_alert_wrapper.y = undefined;
-    kyoto_alert_wrapper.is_down = false;
-});
+$("#kyoto_alert").draggable();
 
 });
